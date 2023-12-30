@@ -9,6 +9,7 @@ import Wrapper from "../UI/Wrapper/Wrapper";
 const AddUser = (props) => {
     const nameInputRef = useRef();
     const ageInputRef = useRef();
+    const collegeInputRef = useRef();
 
     // const [enteredUsername, setEnteredUsername] = useState('');
     // const [enteredAge, setEnteredAge] = useState('');
@@ -18,7 +19,8 @@ const AddUser = (props) => {
         event.preventDefault();
         const enteredName = nameInputRef.current.value;
         const enteredUserAge = ageInputRef.current.value;
-        if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
+        const enterCollege = collegeInputRef.current.value;
+        if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0 || enterCollege.trim().length === 0) {
             setError({
                 title: 'Invalid input',
                 message: 'Please enter a valid name and age (non-empty values).',
@@ -32,10 +34,13 @@ const AddUser = (props) => {
             });
             return;
         }
-        props.onAddUser(enteredName, enteredUserAge);
+
+        props.onAddUser(enteredName, enteredUserAge, enterCollege);
         nameInputRef.current.value = "";
         ageInputRef.current.value = "";
+        collegeInputRef.current.value = "";
 
+        console.log(enterCollege)
 
         // setEnteredUsername('');
         // setEnteredAge('');
@@ -53,6 +58,7 @@ const AddUser = (props) => {
         setError(null);
     };
 
+
     return (
         <Wrapper>
             {error && (
@@ -64,6 +70,7 @@ const AddUser = (props) => {
             )}
             <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>
+
                     <label htmlFor="username">Username</label>
                     <input
                         id="username"
@@ -72,6 +79,7 @@ const AddUser = (props) => {
                         // onChange={usernameChangeHandler}
                         ref={nameInputRef}
                     />
+
                     <label htmlFor="age">Age (Years)</label>
                     <input
                         id="age"
@@ -80,6 +88,17 @@ const AddUser = (props) => {
                         // onChange={ageChangeHandler}
                         ref={ageInputRef}
                     />
+
+
+                    <label htmlFor="collegeName">College Name</label>
+                    <input
+                        id="collegeName"
+                        type="text"
+                        // value={enterCollege}
+                        // onChange={collegeNameChangeHandler}
+                        ref={collegeInputRef}
+                    />
+
                     <Button type="submit">Add User</Button>
                 </form>
             </Card>
